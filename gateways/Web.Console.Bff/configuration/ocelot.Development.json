@@ -1,0 +1,10 @@
+﻿{
+  "Routes": [],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://api.mybusiness.com"
+  },
+  "AuthenticationOptions": {
+    "AuthenticationProviderKey": "Bearer",
+    "AllowedScopes": []
+  }
+}
