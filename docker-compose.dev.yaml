@@ -55,7 +55,7 @@ services:
   #   image: secretctl-secrets-manager
   #   build:
   #     context: .
-  #     dockerfile: secretsmanager/build
+  #     dockerfile: secretsmanager/build/docker/Dockerfile.api
 
 volumes:
   cassandra-data:
