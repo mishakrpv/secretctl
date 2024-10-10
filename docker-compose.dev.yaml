@@ -51,6 +51,12 @@ services:
     networks:
       - back-tier
 
+  # secrets-manager-api:
+  #   image: secretctl-secrets-manager
+  #   build:
+  #     context: .
+  #     dockerfile: secretsmanager/build
+
 volumes:
   cassandra-data:
 
