@@ -1,6 +1,6 @@
 services:
   iam-api:
-    image: secretctl-iam
+    image: secretctl-iam:${TAG:-latest}
     build:
       context: .
       dockerfile: services/iam/AccessManagement/Dockerfile
@@ -56,6 +56,39 @@ services:
   #   build:
   #     context: .
   #     dockerfile: secretsmanager/build/docker/Dockerfile.api
+
+  # kms-api:
+  #   image: secretctl-kms:${TAG:-latest}
+  #   build:
+  #     context: .
+  #     dockerfile: kms/Dockerfile
+  #   ports:
+  #     - "5200:3003"
+  #   environment:
+  #     - ENV=development
+  #     - CONNECTION_STRINGS__DB_CONNECTION=gorm:password@tcp(db:3306)/kms_db?charset=utf8mb4&parseTime=True&loc=Local
+  #   networks:
+  #     - back-tier
+  #   depends_on:
+  #     kms-mysql:
+  #       condition: service_healthy
+
+  # kms-mysql:
+  #   image: mysql:latest
+  #   ports:
+  #     - "57832:3306"
+  #   restart: always
+  #   environment:
+  #     MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+  #     MYSQL_USER: "gorm"
+  #     MYSQL_PASSWORD: "password"
+  #     MYSQL_DATABASE: "kms_db"
+  #   healthcheck:
+  #     test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+  #     timeout: 20s
+  #     retries: 10
+  #   networks:
+  #     - back-tier
 
 volumes:
   cassandra-data:
