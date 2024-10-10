@@ -1,0 +1,21 @@
+{
+    "Routes": [
+        {
+            "DownstreamTopicPartition": {
+                "Topic": "request_sent.secret.create",
+                "Partition": 1,
+                "Offset": null,
+                "Metadata": null
+            },
+            "DownstreamMessage": {
+                "project_id": "[FromBody]",
+                "principal": "[FromBody]",
+                "key": "[FromBody]",
+                "value": "[FromBody]",
+                "ecryption_key_id": "[FromBody]"
+            },
+            "UpstreamPathTemplate": "create-secret",
+            "UpstreamHttpMethod": [ "Post" ]
+        }
+    ]
+}
