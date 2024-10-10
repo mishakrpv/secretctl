@@ -2,4 +2,4 @@
 
 rm -rf "Data/Migrations"
 
-dotnet ef migrations add Initial -c ApplicationDbContext -o Data/Migrations
+dotnet ef migrations add Initial -c AppDbContext -o Data/Migrations
