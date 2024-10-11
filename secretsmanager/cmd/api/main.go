@@ -1,8 +1,18 @@
 package main
 
-import "github.com/mishakrpv/secretctl/secrets-manager/messaging"
+import (
+	"log"
+
+	"github.com/mishakrpv/secretctl/secrets-manager/internal/controller"
+	"github.com/mishakrpv/secretctl/secrets-manager/internal/startup"
+)
 
 func main() {
-	broker := &messaging.MessageBroker{}
-	go broker.StartConsuming()
+	server := startup.StartupServer()
+
+	err := (server.ListenAndServe())
+	controller.Repository.Shutdown()
+	if err != nil {
+		log.Fatal(err)
+	}
 }
