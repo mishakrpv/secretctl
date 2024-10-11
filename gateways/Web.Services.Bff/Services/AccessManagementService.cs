@@ -7,7 +7,7 @@ public class AccessManagementService(HttpClient httpClient)
 {
     private readonly HttpClient _httpClient = httpClient;
 
-    private readonly string _apiV1Prefix = "api/v1";
+    private readonly string _apiV1Prefix = "api/v1/access";
     
     public async Task<int> ShouldBeGranted(HttpContext context)
     {
