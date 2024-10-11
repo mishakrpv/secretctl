@@ -13,6 +13,10 @@ public class AccessManagementService(HttpClient httpClient)
     {
         var url = context.Request.GetDisplayUrl();
         var authorization = context.Request.Headers.Authorization.GetValue();
+        if (string.IsNullOrEmpty(authorization))
+        {
+            return 400;
+        }
         _httpClient.DefaultRequestHeaders.Add("Authorization", authorization);
         _httpClient.DefaultRequestHeaders.Add("X-Resource-Url", url);
         var response = await _httpClient.GetAsync($"{_apiV1Prefix}/authorize");

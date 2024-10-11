@@ -1,0 +1,59 @@
+services:
+  iam-api:
+    image: secretctl-iam
+    build:
+      context: .
+      dockerfile: services/iam/AccessManagement/Dockerfile
+    environment:
+     - CONNECTION_STRINGS__MY_SQL=server=localhost;user=root;password=pwd;database=iam_db
+     - CASSANDRA__CONTACT_POINT=localhost
+     - CASSANDRA__PORT=9042
+     - CASSANDRA__USER=iam
+     - CASSANDRA__PASSWORD=pwd
+    networks:
+     - back-tier
+    depends_on:
+      iam-cassandra:
+        condition: service_healthy
+      iam-mysql:
+        condition: service_healthy
+      
+  iam-mysql:
+    image: mysql:8.0.39
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: pwd
+      MYSQL_DATABASE: iam_db
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+    ports:
+      - "3306:3306"
+    networks:
+      - back-tier
+        
+  iam-cassandra:
+    image: cassandra:latest
+    restart: always
+    environment:
+      - CASSANDRA_USER=iam
+      - CASSANDRA_PASSWORD=pwd
+    healthcheck:
+      test: [ "CMD-SHELL", "[ $$(nodetool statusgossip) = running ]" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    ports:
+      - "9042:9042"
+#    volumes:
+#      - cassandra-data:/var/lib/cassandra
+    networks:
+      - back-tier
+
+volumes:
+  cassandra-data:
+
+networks:
+  front-tier:
+  back-tier:
