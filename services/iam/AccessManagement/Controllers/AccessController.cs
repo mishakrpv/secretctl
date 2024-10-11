@@ -1,11 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
+using AccessManagement.Data;
+using AccessManagement.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AccessManagement.Controllers;
 
-public class AccessController : BaseController
+[Route("api/v1/[controller]")]
+public class AccessController(AppDbContext context, IPolicyRepository policyRepository) : BaseController
 {
+    private readonly AppDbContext _context = context;
+    private readonly IPolicyRepository _policyRepository = policyRepository;
+    
     [HttpGet("[action]")]
-    public async Task<IActionResult> Authorize()
+    public IActionResult Authorize()
     {
         throw new NotImplementedException();
     }
