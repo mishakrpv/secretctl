@@ -3,13 +3,14 @@ using Ocelot.Middleware;
 using Web.Services.Bff.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+var config = builder.Configuration;
 var services = builder.Services;
 var envName = builder.Environment.EnvironmentName;
 
-builder.Configuration.AddJsonFile(Path.Combine("configuration", $"ocelot.{envName}.json"));
+config.AddJsonFile(Path.Combine("configuration", $"ocelot.{envName}.json"));
 
 builder.Services.AddHttpClient<AccessManagementService>(
-    c => c.BaseAddress = new Uri("http://access-management"));
+    c => c.BaseAddress = new Uri(config["IAM:URL"]!));
 
 services.AddOcelot();
 
