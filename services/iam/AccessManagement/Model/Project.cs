@@ -7,7 +7,7 @@ namespace AccessManagement.Model;
 public class Project
 {
     [Column("project_id")]
-    public string Id { get; set; }
+    public string ProjectId { get; set; }
     [Column("user_id")]
     public string UserId { get; set; }
     [Column("name")]
