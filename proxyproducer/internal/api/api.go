@@ -21,6 +21,7 @@ type upstreamRoute struct {
 }
 
 func mapRoutes(config *config.ProxyConfig) (routes map[upstreamRoute]map[string][]string) {
+	routes = make(map[upstreamRoute]map[string][]string)
 	for _, route := range config.Routes {
 		routes[upstreamRoute{
 			pattern: route.UpstreamPathTemplate,
